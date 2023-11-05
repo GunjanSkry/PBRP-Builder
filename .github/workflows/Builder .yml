@@ -15,13 +15,11 @@ on:
         description: 'Recovery  Branch'
         required: true
         default: 'android-12.1'
-        type: choice
-        options:
-        - android-12.1
+        required: true
       DEVICE_TREE:
         description: 'Custom Recovery Tree'
         required: true
-        default: 'https://github.com/xeroxero8x/device_xiaomi_sweet_k6a'
+        default: 'https://github.com/xeroxero8x/device_xiaomi_sweet_k6a-pbrp'
       DEVICE_TREE_BRANCH:
         description: 'Custom Recovery Tree Branch'
         required: true
@@ -67,7 +65,8 @@ jobs:
       
     - name: Build Environment
       run: |
-        sudo apt install aria2 -y
+        sudo apt update -y
+        sudo apt upgrade -y
         sudo apt install repo -y
         git clone https://github.com/akhilnarang/scripts
         cd scripts
@@ -79,7 +78,7 @@ jobs:
         cd ${GITHUB_WORKSPACE}/Recovery
         git config --global user.name "xeroxero8x"
         git config --global user.email "xeroxero8@outlook.com"
-        repo init -u https://github.com/PitchBlackRecoveryProject/manifest_pb -b ${{ github.event.inputs.MANIFEST_BRANCH }}
+        repo init --depth=1 -u https://github.com/PitchBlackRecoveryProject/manifest_pb -b ${{ github.event.inputs.MANIFEST_BRANCH }}
         repo sync
     - name: Clone Device Tree
       run: |
@@ -89,8 +88,9 @@ jobs:
       run: |
         cd ${GITHUB_WORKSPACE}/Recovery
         source build/envsetup.sh
+        export LC_ALL=C
         export ALLOW_MISSING_DEPENDENCIES=true
-        lunch twrp_${{ github.event.inputs.DEVICE_NAME }}-eng && mka pbrp
+        lunch twrp_${{ github.event.inputs.DEVICE_NAME }}-eng && mka recoveryimage
 
     - name: Set Build Date # For Build Date Info, currently using Asia/Dhaka
       run: |
