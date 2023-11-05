@@ -14,8 +14,8 @@ on:
       MANIFEST_BRANCH:
         description: 'Recovery  Branch'
         required: true
-        default: 'android-12.1'
-        required: true
+        default: 'android-12.1
+        required : true
       DEVICE_TREE:
         description: 'Custom Recovery Tree'
         required: true
