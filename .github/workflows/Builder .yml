@@ -86,7 +86,7 @@ jobs:
         source build/envsetup.sh
         export LC_ALL=C
         export ALLOW_MISSING_DEPENDENCIES=true
-        lunch twrp_${{ github.event.inputs.DEVICE_NAME }}-eng && mka recoveryimage
+        lunch omni_${{ github.event.inputs.DEVICE_NAME }}-eng && mka recoveryimage
 
     - name: Set Build Date # For Build Date Info, currently using Asia/Dhaka
       run: |
