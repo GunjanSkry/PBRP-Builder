@@ -7,21 +7,17 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
-      RECOVERY_NAME:
-         discription: 'Name of the recovery you want to build'
-         required: true
-         default: 'PBRP'
-      MANIFEST_BRANCH:
-        description: 'Recovery  Branch'
-        required: true
-        default: 'android-12.1
-        
       DEVICE_TREE:
-        description: 'Custom Recovery Tree'
-        required: true
-        default: 'https://github.com/xeroxero8x/device_xiaomi_sweet_k6a-pbrp'
+         description: 'Custom recovery Tree'
+         required: true
+         default: 'https://github.com/xeroxero8x/device_xiaomi_sweet_k6a-pbrp'
+
       DEVICE_TREE_BRANCH:
         description: 'Custom Recovery Tree Branch'
+        required: true
+        default: 'android-12.1'
+      MANIFEST_BRANCH:
+        description: 'Branch of the custom recover manifest'
         required: true
         default: 'android-12.1'
       DEVICE_PATH:
