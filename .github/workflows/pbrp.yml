@@ -5,13 +5,13 @@ on:
 
 env:
   MANIFEST: https://github.com/PitchBlackTWRP/manifest_pb.git -b android-12.1
-  DEVICE: p3s
-  DT_LINK: https://github.com/Hasajapathirana/android_device_samsung_p3s-1
-  DT_PATH: device/samsung/p3s
+  DEVICE: sweet_k6a
+  DT_LINK: https://github.com/xeroxero8x/device_xiaomi_sweet_k6a-pbrp
+  DT_PATH: device/xiaomi/sweet_k6a
   TARGET: recoveryimage
   OT: twrp_
   
-  TZ: Europe/London
+  TZ: Asia/Dhaka
 
 jobs:
   build:
@@ -25,7 +25,8 @@ jobs:
 
        - name: remove pkg and setting repo
          run: |
-            sudo apt update && sudo apt install git
+            sudo apt update 
+            sudo apt install git -y
             git clone https://github.com/SA-17/rm_pkg pkg && cd pkg && bash setup.sh
             cd .. && sudo -E apt-get -qq update
             sudo rm -rf /opt/*
@@ -35,7 +36,7 @@ jobs:
             sudo apt update
             sudo curl --create-dirs -L -o /usr/local/bin/repo -O -L https://storage.googleapis.com/git-repo-downloads/repo
             sudo chmod a+rx /usr/local/bin/repo
-            sudo apt install zip
+            sudo apt install zip -y
   
        - name: Sync recovery source and device tree
          run: |
@@ -58,7 +59,7 @@ jobs:
          uses: actions/upload-artifact@v2
          with:
             name: recovery.zip
-            path: /home/runner/work/Recovery_builder/Recovery_builder/work/out/target/product/p3s/*UNOFFICIAL*
+            path: /home/runner/work/Recovery_builder/Recovery_builder/work/out/target/product/sweet_k6a/*UNOFFICIAL*
             retention-days: 31
           
        - name: Release recovery
@@ -67,10 +68,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
          with:
           tag_name: ${{ github.run_id }}
-          name:  PBRP Recovery For p3s [Unofficial] 
+          name:  PBRP Recovery For sweet_k6a [Unofficial] 
           files: |
-           /home/runner/work/Recovery_builder/Recovery_builder/work/out/target/product/p3s/*UNOFFICIAL*
-           /home/runner/work/Recovery_builder/Recovery_builder/work/out/target/product/p3s/*img*
-           /home/runner/work/Recovery_builder/Recovery_builder/work/out/target/product/p3s/*tar*
+           /home/runner/work/Recovery_builder/Recovery_builder/work/out/target/product/sweet_k6a/*UNOFFICIAL*
+           /home/runner/work/Recovery_builder/Recovery_builder/work/out/target/product/sweet_k6a/*img*
+           /home/runner/work/Recovery_builder/Recovery_builder/work/out/target/product/sweet_k6a/*tar*
 
 
