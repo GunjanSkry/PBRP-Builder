@@ -10,12 +10,22 @@ on:
       DEVICE_TREE:
          description: 'Custom recovery Tree'
          required: true
-         default: 'https://github.com/xeroxero8x/device_xiaomi_sweet_k6a-pbrp'
+         default: 'https://github.com/goshawk22/recovery_device_oplus_RMX1971.git'
 
       DEVICE_TREE_BRANCH:
         description: 'Custom Recovery Tree Branch'
         required: true
-        default: 'android-12.1'
+        default: 'ofox_12.1_rui1_rui2'
+
+      KERNEL_TREE:
+         description: 'Custom recovery Tree'
+         required: true
+         default: 'https://github.com/goshawk22/android_kernel_oplus_sdm710.git'
+
+      KERNEL_TREE_BRANCH:
+        description: 'Custom Recovery Tree Branch'
+        required: true
+        default: '13'
       MANIFEST_BRANCH:
         description: 'Branch of PBRP Minimal Manifest'
         required: true
@@ -23,11 +33,15 @@ on:
       DEVICE_PATH:
         description: 'Specify your device path.'
         required: true
-        default: 'device/xiaomi/sweet_k6a'
+        default: 'device/oplus/RMX1971'
+      KERNEL_PATH:
+        description: 'Specify your kernel path.'
+        required: true
+        default: 'kernel/oplus/sdm710'
       DEVICE_NAME:
         description: 'Specify your Device Codename.'
         required: true
-        default: 'sweet_k6a'
+        default: 'RMX1971'
      
 jobs:
   build:
@@ -63,14 +77,19 @@ jobs:
       run: |
         mkdir -p ${GITHUB_WORKSPACE}/Recovery
         cd ${GITHUB_WORKSPACE}/Recovery
-        git config --global user.name "xeroxero8x"
-        git config --global user.email "xeroxero8@outlook.com"
+        git config --global user.name "Gunjan Sakariya"
+        git config --global user.email "gunjansakariya1996@gmail.com"
         repo init --depth=1 -u https://github.com/PitchBlackRecoveryProject/manifest_pb -b ${{ github.event.inputs.MANIFEST_BRANCH }}
         repo sync
     - name: Clone Device Tree
       run: |
         cd ${GITHUB_WORKSPACE}/Recovery
         git clone ${{ github.event.inputs.DEVICE_TREE }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }}  ${{ github.event.inputs.DEVICE_PATH }}     
+    - name: Clone Kernel Tree
+      run: |
+        cd ${GITHUB_WORKSPACE}/Recovery
+        git clone ${{ github.event.inputs.KERNEL_TREE }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }}  ${{ github.event.inputs.DEVICE_PATH }}
+    
     - name: Building Recovery
       run: |
         cd ${GITHUB_WORKSPACE}/Recovery
